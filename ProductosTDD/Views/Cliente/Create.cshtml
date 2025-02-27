@@ -1,0 +1,120 @@
+﻿@model ProductosTDD.Data.Cliente
+
+@{
+    ViewData["Title"] = "Crear Cliente";
+}
+
+<div class="card">
+    <div class="card-header">
+        Crear Cliente
+    </div>
+    <div class="card-body">
+        <form asp-action="Create" method="post" class="needs-validation" novalidate onsubmit="return validarCedula()">
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label for="Cedula">Cédula</label>
+                    <input type="text" class="form-control" id="Cedula" name="Cedula" required pattern="\d{10}" minlength="10" maxlength="10">
+                    <div class="invalid-feedback">Por favor, ingrese una cédula válida</div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="Apellidos">Apellidos</label>
+                    <input type="text" class="form-control" id="Apellidos" name="Apellidos" required pattern="[A-Za-zÁÉÍÓÚáéíóú\s]+" minlength="2">
+                    <div class="invalid-feedback">Por favor, ingrese los apellidos (solo letras y espacios).</div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="Nombres">Nombres</label>
+                    <input type="text" class="form-control" id="Nombres" name="Nombres" required pattern="[A-Za-zÁÉÍÓÚáéíóú\s]+" minlength="2">
+                    <div class="invalid-feedback">Por favor, ingrese los nombres (solo letras y espacios).</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label for="FechaNacimiento">Fecha de Nacimiento</label>
+                    <input type="date" class="form-control" id="FechaNacimiento" name="FechaNacimiento" required>
+                    <div class="invalid-feedback">Por favor, ingrese la fecha de nacimiento.</div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="Mail">Mail</label>
+                    <input type="email" class="form-control" id="Mail" name="Mail" required>
+                    <div class="invalid-feedback">Por favor, ingrese un correo electrónico válido.</div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="Telefono">Teléfono</label>
+                    <input type="text" class="form-control" id="Telefono" name="Telefono" required pattern="\d{7,10}" minlength="10" maxlength="10">
+                    <div class="invalid-feedback">Por favor, ingrese un teléfono válido (10 dígitos).</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-8">
+                    <label for="Direccion">Dirección</label>
+                    <input type="text" class="form-control" id="Direccion" name="Direccion" required minlength="5">
+                    <div class="invalid-feedback">Por favor, ingrese la dirección (mínimo 5 caracteres).</div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="Estado">Estado</label>
+                    <select class="form-control" id="Estado" name="Estado" required>
+                        <option value="true">Activo</option>
+                        <option value="false">Inactivo</option>
+                    </select>
+                    <div class="invalid-feedback">Por favor, seleccione el estado.</div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3" id="btnSubmit">Guardar</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    function validarCedula() {
+        var cedula = document.getElementById("Cedula").value;
+        var total = 0;
+        var longitud = cedula.length;
+        var longcheck = longitud - 1;
+
+        if (cedula !== "" && longitud === 10) {
+            for (i = 0; i < longcheck; i++) {
+                if (i % 2 === 0) {
+                    var aux = cedula.charAt(i) * 2;
+                    if (aux > 9) aux -= 9;
+                    total += aux;
+                } else {
+                    total += parseInt(cedula.charAt(i));
+                }
+            }
+
+            total = total % 10 ? 10 - total % 10 : 0;
+
+            if (cedula.charAt(longitud - 1) == total) {
+                document.getElementById("Cedula").setCustomValidity("");
+                return true;
+            } else {
+                document.getElementById("Cedula").setCustomValidity("Cédula inválida");
+                return false;
+            }
+        } else {
+            document.getElementById("Cedula").setCustomValidity("Cédula inválida");
+            return false;
+        }
+    }
+
+    document.getElementById("Cedula").addEventListener("input", function () {
+        this.setCustomValidity("");
+    });
+
+
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            var forms = document.getElementsByClassName('needs-validation');
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>

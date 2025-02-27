@@ -1,0 +1,27 @@
+﻿@model ProductosTDD.Data.Cliente
+
+@{
+    ViewData["Title"] = "Eliminar Cliente";
+}
+
+<div class="card">
+    <div class="card-header bg-danger text-white">
+        Eliminar Cliente
+    </div>
+    <div class="card-body">
+        <p class="text-danger">¿Estás seguro de que deseas eliminar este cliente?</p>
+
+        <ul>
+            <li><strong>Cédula:</strong> @Model.Cedula</li>
+            <li><strong>Nombre:</strong> @Model.Nombres @Model.Apellidos</li>
+            <li><strong>Mail:</strong> @Model.Mail</li>
+            <li><strong>Teléfono:</strong> @Model.Telefono</li>
+        </ul>
+
+        <form asp-action="Delete" method="post">
+            <input type="hidden" asp-for="Codigo" />
+            <button type="submit" class="btn btn-danger" id="btnSubmitEliminar">Eliminar</button>
+            <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</div>
