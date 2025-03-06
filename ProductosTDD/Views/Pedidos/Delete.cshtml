@@ -1,0 +1,28 @@
+﻿@model ProductosTDD.Data.Pedido
+
+@{
+    ViewData["Title"] = "Eliminar Pedido";
+}
+
+<div class="card">
+    <div class="card-header bg-danger text-white">
+        Eliminar Pedido
+    </div>
+    <div class="card-body">
+        <p class="text-danger">¿Estás seguro de que deseas eliminar este pedido?</p>
+
+        <ul>
+            <li><strong>ID del Pedido:</strong> @Model.PedidoID</li>
+            <li><strong>ID del Cliente:</strong> @Model.ClienteID</li>
+            <li><strong>Fecha del Pedido:</strong> @Model.FechaPedido.ToString("dd/MM/yyyy")</li>
+            <li><strong>Monto:</strong> $@Model.Monto</li>
+            <li><strong>Estado:</strong> @Model.Estado</li>
+        </ul>
+
+        <form asp-action="Delete" method="post">
+            <input type="hidden" asp-for="PedidoID" />
+            <button type="submit" class="btn btn-danger">Eliminar</button>
+            <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+﻿@model List<ProductosTDD.Data.Pedido>
+
+@{
+    ViewData["Title"] = "Pedidos";
+}
+
+<h1>Lista de Pedidos</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID Pedido</th>
+            <th>ID Cliente</th>
+            <th>Fecha Pedido</th>
+            <th>Monto</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var pedido in Model)
+        {
+            <tr>
+                <td>@pedido.PedidoID</td>
+                <td>@pedido.ClienteID</td>
+                <td>@pedido.FechaPedido.ToString("dd/MM/yyyy")</td>
+                <td>@pedido.Monto.ToString("C")</td>
+                <td>@pedido.Estado</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@pedido.PedidoID" class="btn btn-warning btn-sm">
+                        <i class="bi bi-pencil-square"></i> Editar
+                    </a>
+                    <a asp-action="Delete" asp-route-id="@pedido.PedidoID" class="btn btn-danger btn-sm">
+                        <i class="bi bi-trash"></i> Eliminar
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Botón de agregar pedido -->
+<a href="/Pedidos/Create" class="btn btn-primary mb-3">
+    <i class="bi bi-cart-plus"></i> Agregar Pedido
+</a>
